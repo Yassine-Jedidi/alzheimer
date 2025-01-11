@@ -101,9 +101,9 @@ def preprocess_audio(input_path, output_path="D:\\alzheimer\\new_audio.wav"):
     return output_path
 
 
-def predict_alzheimer(audio_path, model_path='alzheimer_model.h5',
-                      scaler_path='alzheimer_scaler.pkl',
-                      labels_path='alzheimer_labels.npy'):
+def predict_alzheimer(audio_path, model_path='alzheimer_back/alzheimer_model.h5',
+                      scaler_path='alzheimer_back/alzheimer_scaler.pkl',
+                      labels_path='alzheimer_back/alzheimer_labels.npy'):
     """
     Make prediction on a new audio file using the saved model
     """

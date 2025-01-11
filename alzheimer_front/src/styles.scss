@@ -2,3 +2,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* In your styles.css */
+body {
+  @apply bg-gradient-to-r from-purple-50 via-indigo-50 to-blue-50 h-screen m-0;
+}

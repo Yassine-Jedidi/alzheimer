@@ -9,37 +9,7 @@ import { AudioRecordingService } from '../../service/audio-recording.service';
   imports: [],
   templateUrl: "./upload.component.html",
   styles: [`
-    .upload-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 20px;
-    }
-    input[type="file"] {
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .recording-controls {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-    button {
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    button:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
-    }
-    audio {
-      margin-top: 10px;
-    }
+    /* Your styles here */
   `]
 })
 export class UploadComponent {
@@ -47,6 +17,8 @@ export class UploadComponent {
   isRecording: boolean = false;
   audioUrl: string | null = null;
   recordedBlob: Blob | null = null;
+  isAnalyzing: boolean = false;
+  progress: number = 0;
 
   constructor(
     private router: Router,
@@ -78,16 +50,42 @@ export class UploadComponent {
   predict() {
     const audioData = this.selectedFile || this.recordedBlob;
     if (audioData) {
-      this.predictionService.sendData(audioData).subscribe(result => {
-        console.log(result);
-        this.predictionService.storeResult(result);
-        this.router.navigate(['/result'], { state: { result } });
+      this.isAnalyzing = true;
+      this.progress = 0;
+
+      this.predictionService.sendData(audioData).subscribe({
+        next: (result) => {
+          // Handle result
+          this.predictionService.storeResult(result);
+        },
+        error: (error) => {
+          console.error('Error during prediction:', error);
+        },
+        complete: () => {
+          this.isAnalyzing = false;
+          this.progress = 100;
+
+          // Delay navigation to the result page
+          setTimeout(() => {
+            this.router.navigate(['/result'], { state: { result: this.predictionService.getResult() } });
+          }, 1000); // Delay of 1 second to show the completed progress bar
+        }
       });
+
+      // Simulate progress (optional)
+      const interval = setInterval(() => {
+        if (this.progress < 90) {
+          this.progress += 5;
+        } else {
+          clearInterval(interval);
+        }
+      }, 500);
     }
+
+
   }
 
   get canPredict(): boolean {
     return !!(this.selectedFile || this.recordedBlob) && !this.isRecording;
   }
-
 }

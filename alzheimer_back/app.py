@@ -7,7 +7,8 @@ import os
 from model import preprocess_audio, predict_alzheimer
 
 test_audio = "audio.wav"  # Replace with the uploaded audio file path
-model_file = "alzheimer_model.h5"  # Replace with the trained model path
+# Replace with the trained model path
+model_file = "alzheimer_back/alzheimer_model.h5"
 """ print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%first print%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 res1,res2,res3 ,res4= predict_alzheimer(test_audio, model_file)
 print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% result %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
