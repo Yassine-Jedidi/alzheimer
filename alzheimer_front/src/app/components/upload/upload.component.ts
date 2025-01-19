@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { PredictionService } from '../../service/prediction.service';
 import { AudioRecordingService } from '../../service/audio-recording.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-upload',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: "./upload.component.html",
   styles: [`
     /* Your styles here */
